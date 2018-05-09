@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_otherdetain_form">
+            <field name="name">otherdetain.form</field>
+            <field name="model">otherdetain</field>
+            <field name="arch" type="xml">
+                <form string="otherdetain" version="7.0">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="status"/>
+                            <field name="remark"/>
+                            <field name="code"/>
+                            <field name="paydate"/>
+                            <field name="tax"/>
+                            <field name="company_id"/>
+                            <field name="billid"/>
+                            <field name="amt_tax"/>
+                            <field name="paymode"/>
+                            <field name="amount"/>
+                            <field name="employee_id"/>
+                            <field name="supplier"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_otherdetain_tree">
+            <field name="name">otherdetain.tree</field>
+            <field name="model">otherdetain</field>
+            <field name="arch" type="xml">
+                <tree string="otherdetain">
+                    <field name="status"/>
+                    <field name="remark"/>
+                    <field name="code"/>
+                    <field name="paydate"/>
+                    <field name="tax"/>
+                    <field name="company_id"/>
+                    <field name="billid"/>
+                    <field name="amt_tax"/>
+                    <field name="paymode"/>
+                    <field name="amount"/>
+                    <field name="employee_id"/>
+                    <field name="supplier"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search otherdetain  icon    -->
+        <record model="ir.ui.view" id="view_otherdetain_search">
+            <field name="name">otherdetain.search</field>
+            <field name="model">otherdetain</field>
+            <field name="arch" type="xml">
+                <search string="otherdetain">
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_otherdetain">
+            <field name="name">otherdetain</field>
+            <field name="res_model">otherdetain</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_otherdetain_tree"/>
+        </record>
+
+        <!-- 定义菜单  -->
+    </data>
+</openerp>

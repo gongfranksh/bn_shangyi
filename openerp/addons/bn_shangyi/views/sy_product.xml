@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_sy_product_form">
+            <field name="name">sy.product.form</field>
+            <field name="model">sy.product</field>
+            <field name="arch" type="xml">
+                <form string="sy_product" version="7.0">
+                    <header>
+                        <button name="synch_product_data" string="导入产品" type="object"/>
+                        <button name="synch_product_category_parent" string="Catregory Parent" type="object"/>
+                        <button name="synch_pos_order" string="导入pos销售单" type="object"/>
+                        <!-- <button name="auto_update" string="自动更新" type="object"/>-->
+                        <!-- <button name="check_pos_order" string="检查历史数据" type="object"/>-->
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="text"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_sy_product_tree">
+            <field name="name">sy.product.tree</field>
+            <field name="model">sy.product</field>
+            <field name="arch" type="xml">
+                <tree string="sy_product">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search sy_product  icon    -->
+        <record model="ir.ui.view" id="view_sy_product_search">
+            <field name="name">sy.product.search</field>
+            <field name="model">sy.product</field>
+            <field name="arch" type="xml">
+                <search string="sy_product">
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_sy_product">
+            <field name="name">sy_product</field>
+            <field name="res_model">sy.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_sy_product_tree"/>
+        </record>
+
+        <record id="product_lezhi" model="product.category">
+            <field name="name">乐之产品分类</field>
+        </record>
+
+        <!-- 定义菜单  -->
+    </data>
+</openerp>

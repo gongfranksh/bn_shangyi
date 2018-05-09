@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_sy_pos_order_report_tree" model="ir.ui.view">
+            <field name="name">sy.pos.order.report.tree</field>
+            <field name="model">sy.pos.order.report</field>
+            <field name="arch" type="xml">
+                <tree string="POS Order Analysis">
+                    <field name="product"/>
+                    <field name="category_id"/>
+                    <field name="barcode"/>
+                    <field name="m_category_id"/>
+                    <field name="b_category_id"/>
+                    <field name="brand_id"/>
+                    <field name="sale_date"/>
+                    <field name="sale_man"/>
+                    <field name="qty"/>
+                    <field name="amount"/>
+                    <field name="profit" groups="bn_shangyi.group_profit"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sy_pos_order_report_graph" model="ir.ui.view">
+            <field name="name">sy.pos.order.report.graph</field>
+            <field name="model">sy.pos.order.report</field>
+            <field name="arch" type="xml">
+                <graph string="POS Order Analysis" type="pivot">
+                    <field name="sale_date" type="col"/>
+                    <field name="qty" type="measure"/>
+                    <field name="amount" type="measure"/>
+                    <field name="profit" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="view_sy_pos_order_report_search" model="ir.ui.view">
+            <field name="name">sy.pos.order.report.search</field>
+            <field name="model">sy.pos.order.report</field>
+            <field name="arch" type="xml">
+                <search string="POS Order Report">
+                    <separator/>
+                    <filter string="Year" name="year"
+                            domain="[('sale_date','&lt;=', time.strftime('%%Y-%%m-%%d')),('sale_date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <filter string="Month" name="month"
+                            domain="[('sale_date','&lt;=', time.strftime('%%Y-%%m-%%d')),('sale_date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                    <separator/>
+                    <group string="大类">
+                        <filter string="智能穿戴" name="b_category_1" domain="[('b_category_id.name','=','智能穿戴')]"/>
+                        <filter string="高新科技" name="b_category_2" domain="[('b_category_id.name','=','高新科技')]"/>
+                        <filter string="智能生活" name="b_category_3" domain="[('b_category_id.name','=','智能生活')]"/>
+                        <filter string="创意周边" name="b_category_4" domain="[('b_category_id.name','=','创意周边')]"/>
+                        <filter string="美容家电" name="b_category_5" domain="[('b_category_id.name','=','美容家电')]"/>
+                        <filter string="生活用品" name="b_category_6" domain="[('b_category_id.name','=','生活用品')]"/>
+                    </group>
+                    <group string="Group By">
+                        <filter string="大类" name="b_category_id" context="{'group_by':'b_category_id'}"/>
+                        <filter string="品牌" name="brand_id" context="{'group_by':'brand_id'}"/>
+                        <filter string="营业员" name="sale_man" context="{'group_by':'sale_man'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_sy_pos_order_report" model="ir.actions.act_window">
+            <field name="name">Settle Bill Analysis</field>
+            <field name="res_model">sy.pos.order.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="context" eval="{'search_default_month':1,}"/>
+        </record>
+
+    </data>
+</openerp>

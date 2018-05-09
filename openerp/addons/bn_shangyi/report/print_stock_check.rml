@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document filename="test.pdf">
+  <template pageSize="21cm,29.7cm">
+    <pageTemplate id="first">
+  		<frame id="first" x1="0.1cm" y1="0.1cm" width="20cm" height="29cm" />
+  	</pageTemplate>
+  </template>
+  <stylesheet>
+  	 <blockTableStyle id="Table01">
+      	<blockAlignment start="0,0" stop="-1,-1" value="CENTER"/>
+      	<blockValign start="0,0" stop="-1,-1" value="MIDDLE"/>  
+  	 	<lineStyle kind="GRID" colorName="black" start="0,0" stop="-1,-1"/>  
+  	 	<blockFont name="Helvetica" size="9.0" start="0,0" stop="-1,-1"/>  
+  	 	<blockSpan start="1,0" stop="5,0"/>
+  	 	<blockSpan start="1,1" stop="5,1"/> 
+  	 	<blockSpan start="3,4" stop="5,4"/>
+  	 	<blockSpan start="1,5" stop="5,5"/>
+  	 	<blockSpan start="1,6" stop="5,6"/>
+  	 </blockTableStyle>
+  	 <paraStyle name="default_Title" fontSize="18.0" font="SimHei" alignment="CENTER" spaceAfter="6.0" />
+  	 <paraStyle name="default_Centre" fontSize="9.0" font="SimHei" alignment="CENTER" />
+  	 <paraStyle name="default_Left" fontSize="9.0"  font="SimHei" alignment="LEFT" />
+  	 <paraStyle name="default_Right" fontSize="9.0" font="SimHei" alignment="RIGHT" />
+  </stylesheet>
+  <story>
+
+  	<para style="default_Left">[[repeatIn(objects,'o')]]</para>
+
+  	<para style="default_Title">
+      	[[o.company_id.code]] [[o.company_id.name]]
+      	盘点明细表
+      	盘点单号:[[o.code]]
+      	货架号:[[o.shield]]
+    </para>
+	<para style="default_Title">
+            
+	</para>
+	<blockTable>
+    	<tr>
+    	<td><para style="default_Left">商品名称</para></td>
+    	<td><para style="default_Right">商品编码</para></td>
+    	<td><para style="default_Right">商品条码</para></td>
+    	<td><para style="default_Right">初盘数量</para></td>
+    	<td><para style="default_Right">复盘数量</para></td>
+    	</tr>
+	</blockTable>
+	<line/>
+    <section>
+    <blockTable>
+    	<para style="default_Left">[[repeatIn(o.details_id,'detail')]]</para>
+    	<tr> 
+    	<td><para style="default_Left">[[get_str(detail.product_id.name)]]</para></td>
+    	<td><para style="default_Right">[[detail.product_id.code]]</para></td>
+    	<td><para style="default_Right">[[detail.product_id.barcode]]</para></td>
+    	<td><para style="default_Right">[[detail.checkqty1]]</para></td>
+    	<td><para style="default_Right">__________</para></td>
+    	</tr>
+    </blockTable>
+    </section>
+    <blockTable>
+    <tr>
+		<td><para fontSize="16.0" alignment="LEFT">初盘人:_________________________________ </para></td>
+	</tr>
+	</blockTable>
+	<blockTable>
+	<tr>
+		<td><para fontSize="16.0" alignment="LEFT">盘点人:______________ </para></td>
+		<td><para fontSize="16.0" alignment="LEFT">录入人:_____________</para></td>
+	</tr>
+	</blockTable>
+  </story>
+</document>

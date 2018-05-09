@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<openerp>
+<data>
+<!--  New Form View   --> 
+<!-- 公司模板 -->
+    <record model="ir.ui.view" id="view_sale_plan_model_company_form">
+        <field name="name">sale.plan.model.company.form</field> 
+        <field name="model">sale.plan.model.company</field> 
+        <field name="arch" type="xml">
+            <form string="sale_plan_model_company" version="7.0">
+                <header>
+                	<field name="state" widget="statusbar"/>
+                	<button name="aduit" string="审核" type="object" attrs="{'invisible': [('state','=','1')]}"
+                		groups="bn_shangyi.group_plan_modol"/>
+                	<button name="compute_brand" string="计算品牌销售目标" type="object"
+                		attrs="{'invisible': [('state','=','1')]}" groups="bn_shangyi.group_plan_modol"/>
+                </header>
+                <sheet>
+                <group>
+	                <field name="code" attrs="{'readonly': [('state','=','1')]}"/>
+                </group>
+                <notebook>
+				<page string="大类明细">
+	                <group>
+	                	<field name="detail_ids" attrs="{'readonly': [('state','=','1')]}">
+	                		<tree editable="button">
+		                		<field name="bigclass"/>
+		                		<field name="sale_weight" sum="sale_weight"/>
+		                		<field name="profit_weight" sum="profit_weight"/>
+	                		</tree>
+	                	</field>
+	                </group>
+                </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+ <!--  new Tree View   --> 
+    <record model="ir.ui.view" id="view_sale_plan_model_company_tree">
+        <field name="name">sale.plan.model.company.tree</field> 
+        <field name="model">sale.plan.model.company</field> 
+        <field name="arch" type="xml">
+            <tree string="sale_plan_model_company">
+	            <field name="code"/>
+	            <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+<!--  Search sale_plan_model_company  icon    --> 
+    <record model="ir.ui.view" id="view_sale_plan_model_company_search">
+        <field name="name">sale.plan.model.company.search</field> 
+        <field name="model">sale.plan.model.company</field> 
+        <field name="arch" type="xml">
+            <search string="sale_plan_model_company">    
+            </search>
+        </field>
+    </record>
+
+<!-- 定义视图动作  --> 
+    <record model="ir.actions.act_window" id="action_sale_plan_model_company">
+        <field name="name">sale_plan_model_company</field> 
+        <field name="res_model">sale.plan.model.company</field> 
+        <field name="view_type">form</field> 
+        <field name="view_mode">form,tree</field> 
+        <field name="view_id" ref="view_sale_plan_model_company_tree" /> 
+    </record>
+    
+<!-- 大类模板 -->
+<!--  New Form View   --> 
+    <record model="ir.ui.view" id="view_sale_plan_model_bigclass_form">
+        <field name="name">sale.plan.model.bigclass.form</field> 
+        <field name="model">sale.plan.model.bigclass</field> 
+        <field name="arch" type="xml">
+            <form string="sale_plan_model_bigclass" version="7.0">
+                <header>
+                </header>
+                <sheet>
+                <group>
+                    <field name="model_id" readonly="True"/>
+                    <field name="state"/>
+                    <field name="bigclass" attrs="{'readonly': [('state','=','1')]}"/>
+                    <field name="sale_weight" attrs="{'readonly': [('state','=','1')]}"/>
+                    <field name="profit_weight" attrs="{'readonly': [('state','=','1')]}"/>
+                </group>
+                <notebook>
+				<page string="品牌明细">
+	                <group>
+	                	<field name="brands" attrs="{'readonly': [('state','=','1')]}">
+	                		<tree editable="button">
+		                		<field name="brand"/>
+		                		<field name="sale_weight" sum="sale_weight"/>
+		                		<field name="profit_weight" sum="profit_weight"/>
+	                		</tree>
+	                	</field>
+	                </group>
+                </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+ <!--  new Tree View   --> 
+    <record model="ir.ui.view" id="view_sale_plan_model_bigclass_tree">
+        <field name="name">sale.plan.model.bigclass.tree</field> 
+        <field name="model">sale.plan.model.bigclass</field> 
+        <field name="arch" type="xml">
+            <tree string="sale_plan_model_bigclass">
+				<field name="model_id" />
+                <field name="bigclass" />
+                <field name="sale_weight" />
+                <field name="profit_weight" />
+            </tree>
+        </field>
+    </record>
+
+<!--  Search sale_plan_model_bigclass  icon    --> 
+    <record model="ir.ui.view" id="view_sale_plan_model_bigclass_search">
+        <field name="name">sale.plan.model.bigclass.search</field> 
+        <field name="model">sale.plan.model.bigclass</field> 
+        <field name="arch" type="xml">
+            <search string="sale_plan_model_bigclass">    
+            </search>
+        </field>
+    </record>
+
+<!-- 定义视图动作  --> 
+    <record model="ir.actions.act_window" id="action_sale_plan_model_bigclass">
+        <field name="name">sale_plan_model_bigclass</field> 
+        <field name="res_model">sale.plan.model.bigclass</field> 
+        <field name="view_type">form</field> 
+        <field name="view_mode">form,tree</field> 
+        <field name="view_id" ref="view_sale_plan_model_bigclass_tree" /> 
+    </record>
+    
+<!-- 选择模板 -->
+    <record model="ir.ui.view" id="view_create_sale_plan_detail_form">
+        <field name="name">create.sale.plan.detail.form</field> 
+        <field name="model">create.sale.plan.detail</field> 
+        <field name="arch" type="xml">
+            <form string="create_sale_plan_detail" version="7.0">
+                <sheet>
+                <group>
+                	<field name="sale_id" readonly="True"/>
+                	<field name="period_id" readonly="True"/>
+                	<field name="model_id"/>
+                </group>
+                </sheet>
+                <footer>
+		   			<button type="object" name="create_detail" string="确定" class="oe_highlight"/>
+		   			or
+		   			<button special="cancel" class="oe_link" string="取消"/>
+		   		</footer>
+            </form>
+        </field>
+    </record>    
+</data>
+</openerp>
+

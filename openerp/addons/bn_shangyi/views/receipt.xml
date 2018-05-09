@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_receipt_head_form">
+            <field name="name">receipt.head.form</field>
+            <field name="model">receipt.head</field>
+            <field name="arch" type="xml">
+                <form string="receipt_head" version="7.0">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="receiptid"/>
+                            <field name="receiptdate"/>
+                            <field name="orderid"/>
+                            <field name="sup"/>
+                            <field name="operatorid"/>
+                            <field name="r_id"/>
+                            <field name="status"/>
+                            <field name="company"/>
+                        </group>
+                        <group>
+                            <field name="detail_ids">
+                                <tree editable="button">
+                                    <field name="proid"/>
+                                    <field name="procode"/>
+                                    <field name="probar"/>
+                                    <field name="orderqty"/>
+                                    <field name="orderprice"/>
+                                    <field name="receipttax"/>
+                                    <field name="receiptqty"/>
+                                    <field name="receiptprice"/>
+                                    <field name="gifqty"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="remark"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_receipt_head_tree">
+            <field name="name">receipt.head.tree</field>
+            <field name="model">receipt.head</field>
+            <field name="arch" type="xml">
+                <tree string="receipt_head">
+                    <field name="receiptid"/>
+                    <field name="receiptdate"/>
+                    <field name="orderid"/>
+                    <field name="sup"/>
+                    <field name="operatorid"/>
+                    <field name="r_id"/>
+                    <field name="status"/>
+                    <field name="company"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search receipt_head  icon    -->
+        <record model="ir.ui.view" id="view_receipt_head_search">
+            <field name="name">receipt.head.search</field>
+            <field name="model">receipt.head</field>
+            <field name="arch" type="xml">
+                <search string="receipt_head">
+                </search>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+

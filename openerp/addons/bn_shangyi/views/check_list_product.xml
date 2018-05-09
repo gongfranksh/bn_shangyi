@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_check_list_product_tree" model="ir.ui.view">
+            <field name="name">check.list.product.tree</field>
+            <field name="model">check.list.product</field>
+            <field name="arch" type="xml">
+                <tree string="Check List Product">
+                    <field name="checkt"/>
+                    <field name="braid"/>
+                    <field name="supcode"/>
+                    <field name="supid"/>
+                    <field name="type"/>
+                    <field name="procode"/>
+                    <field name="probar"/>
+                    <field name="proid"/>
+                    <field name="checkid"/>
+                    <field name="date"/>
+                    <field name="amount"/>
+                    <field name="receiptid"/>
+                    <field name="cost"/>
+                    <field name="saleqty"/>
+                    <button name="view_receipt" string="查看单据" icon="terp-stock_zoom" type="object"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_check_list_product_search" model="ir.ui.view">
+            <field name="name">check.list.product.search</field>
+            <field name="model">check.list.product</field>
+            <field name="arch" type="xml">
+                <search string="check_list_product">
+                    <filter string="类型分类" name="pro" context="{'group_by':'checkt'}"/>
+                    <filter string="经营方式" name="type" context="{'group_by':'type'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_check_list_product_report_tree" model="ir.ui.view">
+            <field name="name">check.list.product.report.tree</field>
+            <field name="model">check.list.product.report</field>
+            <field name="arch" type="xml">
+                <tree string="Check List Product Report" colors="red:d_qty!=0;red:d_cost!=0;">
+                    <field name="braid" invisible="1"/>
+                    <field name="sup_code" invisible="1"/>
+                    <field name="type"/>
+                    <field name="pro_code"/>
+                    <field name="p_qty"/>
+                    <field name="s_qty"/>
+                    <field name="d_qty"/>
+                    <field name="p_cost"/>
+                    <field name="s_cost"/>
+                    <field name="d_cost"/>
+                    <button name="view_detail" string="查看明细" type="object" icon="terp-stock_zoom"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_check_list_product_report_graph" model="ir.ui.view">
+            <field name="name">check.list.product.report.graph</field>
+            <field name="model">check.list.product.report</field>
+            <field name="arch" type="xml">
+                <graph string="对账销售差异报表" type="pivot">
+                    <field name="p_qty" type="measure"/>
+                    <field name="s_qty" type="measure"/>
+                    <field name="d_qty" type="measure"/>
+                    <field name="p_cost" type="measure"/>
+                    <field name="s_cost" type="measure"/>
+                    <field name="d_cost" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        
+        <record id="view_check_list_product_report_search" model="ir.ui.view">
+            <field name="name">check.list.product.report.search</field>
+            <field name="model">check.list.product.report</field>
+            <field name="arch" type="xml">
+                <search string="check_list_product_report">
+                    <group string="Group By">
+                        <filter string="门店" name="braid" context="{'group_by':'braid'}"/>
+                        <filter string="经营方式" name="type" context="{'group_by':'type'}"/>
+                        <filter string="供应商" name="sup" context="{'group_by':'sup_code'}"/>
+                        <filter string="商品" name="pro" context="{'group_by':'pro_code'}"/>
+                    </group>
+                    <filter string="数量异常" name="d_qty" domain="[('d_qty','!=','0')]"/>
+                    <filter string="成本异常" name="d_cost" domain="[('d_cost','!=','0')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_check_list_product_report" model="ir.actions.act_window">
+            <field name="name">check_list_product_report</field>
+            <field name="res_model">check.list.product.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,graph</field>
+            <field name="context"
+                   eval="{'search_default_braid':1,'search_default_sup':1,'search_default_type':1,
+                   		'search_default_d_qty':1,'search_default_d_cost':1}"/>
+        </record>
+
+    </data>
+</openerp>

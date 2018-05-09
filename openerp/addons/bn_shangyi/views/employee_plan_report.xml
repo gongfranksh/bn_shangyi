@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_employee_plan_report_tree" model="ir.ui.view">
+            <field name="name">employee.plan.report.tree</field>
+            <field name="model">employee.plan.report</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Sale Analysis">
+                    <field name="employee_id"/>
+                    <field name="brand_id"/>
+                    <field name="date"/>
+                    <field name="amount" sum="amount"/>
+                    <field name="profit" sum="profit" groups="bn_shangyi.group_profit"/>
+                    <field name="rate" groups="bn_shangyi.group_profit"/>
+                    <field name="plan_sale_daily"/>
+                    <field name="sale_daily_rate"/>
+                    <field name="plan_profit_daily" groups="bn_shangyi.group_profit"/>
+                    <field name="plan_sale_month"/>
+                    <field name="plan_profit_month" groups="bn_shangyi.group_profit"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="employee_plan_report_search">
+            <field name="name">employee.plan.report.search</field>
+            <field name="model">employee.plan.report</field>
+            <field name="arch" type="xml">
+                <search string="employee.plan.report">
+                    <field name="employee_id"/>
+                    <field name="date"/>
+                    <group string="Group by">
+                        <filter name="groupby_employee" context="{'group_by' : 'employee_id'}" string="Employee"/>
+                    </group>
+                    <filter string="昨日数据" name="Yesterday"
+                            domain="[('date','&lt;=', time.strftime('%Y-%m-%d')),('date','&gt;=',time.strftime('%Y-%m-%d',time.strftime('%Y-%m-%d',time.localtime(time.time()-1*86400))))]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_employee_plan_report" model="ir.actions.act_window">
+            <field name="name">Employee Sale Analysis</field>
+            <field name="res_model">employee.plan.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context" eval="{'search_default_groupby_employee':1,}"/>
+        </record>
+    </data>
+</openerp>

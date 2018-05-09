@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record model="ir.module.category" id="module_bn_shangyi">
+            <field name="name">Jspot</field>
+        </record>
+
+        <record id="group_profit" model="res.groups">
+            <field name="name">查看毛利</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+        </record>
+
+
+		<record id="group_plan_input" model="res.groups">
+            <field name="name">日计划录入</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+        </record>
+                
+        <record id="group_plan_modol" model="res.groups">
+            <field name="name">销售计划模板</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+        </record>
+        
+        <record id="group_plan_view" model="res.groups">
+            <field name="name">销售计划查看</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+        </record>
+        
+		<record id="group_plan" model="res.groups">
+            <field name="name">销售计划管理</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+            <field name="implied_ids" eval="[(4, ref('group_plan_input')),
+            									(4, ref('group_plan_modol'))]"/>
+        </record>
+        
+        <record id="group_view" model="res.groups">
+            <field name="name">报表查看</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+            <field name="menu_access" eval="[(4, ref('sy_pos_order_ziying_menu')),
+            									(4, ref('sy_pos_payment_menu')),
+            									(4, ref('menu_sy_pos_order_report'))]"/>
+        </record>
+
+        <!--
+        <record id="group_check" model="res.groups">
+            <field name="name">盘点主管 </field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+        </record>
+
+        <record id="group_check_input" model="res.groups">
+            <field name="name">盘点录入 </field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+        </record>
+        -->
+
+        <record id="group_pm" model="res.groups">
+            <field name="name">PM组</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+            <field name="menu_access" eval="[(4, ref('sy_pos_order_ziying_menu')),
+            									(4, ref('sy_pos_payment_menu')),
+            									(4, ref('deduct_fund_change_menu')),
+            									(4, ref('check_account_menu')),
+            									(4, ref('menu_sy_pos_order_report')),
+            									(4, ref('menu_brand_plan_report')),
+            									(4,ref('sy_supllier_menu'))]"/>
+        </record>
+
+        <record id="group_caiwu" model="res.groups">
+            <field name="name">财务组</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+            <field name="implied_ids" eval="[(4, ref('group_pm'))]"/>
+            <field name="menu_access" eval="[(4, ref('import_check_list_menu')),
+            									(4, ref('check_account_import_menu')),
+            									(4, ref('menu_shangyi_mail'))]"/>
+        </record>
+
+        <record id="group_manager" model="res.groups">
+            <field name="name">乐之系统管理员</field>
+            <field name="category_id" ref="module_bn_shangyi"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_hr_manager')),
+											(4, ref('group_pm')),
+											(4, ref('group_caiwu')),
+											(4, ref('group_plan')),
+											(4, ref('group_view')),
+											(4, ref('group_plan')),
+											(4, ref('group_profit')),]"/>
+        </record>
+        
+<!-- multi -->
+	<record model="ir.rule" id="sy_pos_order_comp_rule">
+        <field name="name">sy.pos.order multi-company</field>
+        <field name="model_id" ref="model_sy_pos_order"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    
+	<record model="ir.rule" id="sy_pos_payment_comp_rule">
+        <field name="name">sy.pos.payment multi-company</field>
+        <field name="model_id" ref="model_sy_pos_payment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    
+	<record model="ir.rule" id="deduct_fund_change_comp_rule">
+        <field name="name">deduct.fund.change multi-company</field>
+        <field name="model_id" ref="model_deduct_fund_change"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    
+	<record model="ir.rule" id="check_list_product_report_comp_rule">
+        <field name="name">check.list.product.report multi-company</field>
+        <field name="model_id" ref="model_check_list_product_report"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('braid','=',False),('braid','child_of',[user.company_id.id])]</field>
+    </record>
+    
+	<record model="ir.rule" id="check_account_comp_rule">
+        <field name="name">check.account multi-company</field>
+        <field name="model_id" ref="model_check_account"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    
+    <record model="ir.rule" id="mail_mail_comp_rule">
+        <field name="name">mail.mail multi-company</field>
+        <field name="model_id" ref="model_mail_mail"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    
+	<record model="ir.rule" id="mail_mail_caiwu_rule">
+        <field name="name">mail.mail caiwu</field>
+        <field name="model_id" ref="model_mail_mail"/>
+        <field name="domain_force">['|',('mail_message_id.author_id','=',False),('mail_message_id.author_id','=',user.partner_id.id)]</field>
+        <field name="groups" eval="[(4,ref('group_caiwu'))]"/>
+    </record>
+
+	<record model="ir.rule" id="check_account_group_rule">
+        <field name="name">check.account multi-group</field>
+        <field name="model_id" ref="model_check_account"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('group_code','=',False),('group_code','in',[g.id for g in user.sy_groups])]</field>
+    </record>
+    
+	<record model="ir.rule" id="deduct_fund_change_pm_rule">
+        <field name="name">deduct_fund_change pm</field>
+        <field name="model_id" ref="model_deduct_fund_change"/>
+        <field name="domain_force">[('create_uid','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('group_pm'))]"/>
+    </record>
+    
+	<record model="ir.rule" id="deduct_fund_change_caiwu_rule">
+        <field name="name">deduct_fund_change caiwu</field>
+        <field name="model_id" ref="model_deduct_fund_change"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('group_caiwu'))]"/>
+    </record>
+    
+	<record model="ir.rule" id="payable_dx_rule">
+        <field name="name">payable_dx</field>
+        <field name="model_id" ref="model_payable_dx"/>
+        <field name="domain_force">[('check_amt','!=',0)]</field>
+    </record>
+    
+    </data>
+</openerp>

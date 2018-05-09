@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_brand_plan_report_tree" model="ir.ui.view">
+            <field name="name">brand.plan.report.tree</field>
+            <field name="model">brand.plan.report</field>
+            <field name="arch" type="xml">
+                <tree string="Brand Sale Analysis">
+                    <field name="company_id"/>
+                    <field name="categ_id"/>
+                    <field name="brand_id"/>
+                    <field name="date"/>
+                    <field name="amount" sum="amount"/>
+                    <field name="plan_sale_daily"/>
+                    <field name="profit" sum="profit" groups="bn_shangyi.group_profit"/>
+                    <field name="plan_profit_daily" groups="bn_shangyi.group_profit"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_brand_plan_report_graph" model="ir.ui.view">
+            <field name="name">brand.plan.report.graph</field>
+            <field name="model">brand.plan.report</field>
+            <field name="arch" type="xml">
+                <graph string="品牌计划报表" type="pivot">
+                    <field name="amount" type="measure"/>
+                    <field name="plan_sale_daily" type="measure"/>
+                    <field name="profit" type="measure" groups="bn_shangyi.group_profit"/>
+                    <field name="plan_profit_daily" type="measure" groups="bn_shangyi.group_profit"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="brand_plan_report_search">
+            <field name="name">brand.plan.report.search</field>
+            <field name="model">brand.plan.report</field>
+            <field name="arch" type="xml">
+                <search string="brand.plan.report">
+                    <field name="brand_id"/>
+                    <field name="date"/>
+                    <group string="Group by">
+                        <filter name="groupby_company" context="{'group_by' : 'company_id'}" string="门店"/>
+                        <filter name="groupby_category" context="{'group_by' : 'categ_id'}" string="大类"/>
+                        <filter name="groupby_brand" context="{'group_by' : 'brand_id'}" string="品牌"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_brand_plan_report" model="ir.actions.act_window">
+            <field name="name">Brand Sale Analysis</field>
+            <field name="res_model">brand.plan.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,graph</field>
+            <field name="context"
+                   eval="{'search_default_groupby_company':1,'search_default_groupby_category':1,'search_default_groupby_brand':1,}"/>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,86 @@
+<openerp>
+    <data>
+        <menuitem id="shangyi_menu" name="乐之系统" sequence="1"/>
+        <menuitem id="sy_product_menu" name="商品" parent="shangyi_menu" sequence="10"/>
+        <menuitem id="product_brand_menu" name="品牌" parent="sy_product_menu" action="action_product_brand"
+                  sequence="10"/>
+
+        <menuitem id="sy_product_ziying_menu" name="导入数据" parent="sy_product_menu" action="action_sy_product"
+                  sequence="20"/>
+        <menuitem id="sy_pos_order_ziying_menu" name="POS销售单" parent="sy_product_menu" action="action_sy_pos_order"
+                  sequence="20"/>
+        <menuitem id="sy_pos_payment_menu" name="POS支付明细" parent="sy_product_menu" action="action_sy_pos_payment"
+                  sequence="30"/>
+        <!-- add by weiliang 20180503-->
+        <!-- new sync shangyi method -->
+        <menuitem id="sync_shangyi_data_menu" name="导入乐之基本数据" parent="sy_product_menu" action="action_sync_shangyi_data"
+                  sequence="50"/>
+
+
+		<menuitem id="change_center_menu" name="对账单调整" parent="shangyi_menu" sequence="13"/>
+		
+        <menuitem id="sup_sponse_items_menu" name="行销赞助项目" parent="change_center_menu" action="action_sup_sponse_items"
+                  sequence="9"/>
+
+        <menuitem id="deduct_fund_change_menu" name="扣款调整" parent="change_center_menu"
+                  action="action_deduct_fund_change" sequence="10"/>
+
+        
+
+        <menuitem id="import_check_list_menu" name="导入对账差异表" parent="change_center_menu"
+                  action="action_import_check_list" sequence="15"/>
+
+
+        <menuitem action="action_check_list_product_report" id="menu_check_list_product_report"
+                  parent="change_center_menu" sequence="20" name="对账与销售差异"/>
+
+        <menuitem id="sy_account_menu" name="对账单" parent="shangyi_menu" sequence="15"/>
+        <menuitem id="sy_account_period_menu" name="账期" parent="sy_account_menu"
+                  action="account.action_account_period" sequence="5"/>
+        <menuitem id="sy_purchase_group_menu" name="采购组" parent="sy_account_menu"
+                  action="action_purchase_group" sequence="6"/>
+        <menuitem id="sy_supllier_menu" name="供应商" parent="sy_account_menu"
+                  action="base.action_partner_supplier_form" sequence="7"/>
+   		<menuitem id="check_account_import_menu" name="对账单导入" parent="sy_account_menu"
+                  action="action_check_account_import" sequence="10"/>
+		<menuitem id="check_account_menu" name="对账单" parent="sy_account_menu" action="action_check_account"
+                  sequence="20"/>
+	   	<menuitem id="deduct_fund_menu" name="合同扣款明细" parent="sy_account_menu" action="action_deduct_fund"
+                  sequence="20"/>
+        <menuitem action="mail.action_view_mail_mail" id="menu_shangyi_mail" parent="sy_account_menu" sequence="25"
+                  name="电子邮件"/>
+	    <menuitem id="ortherdetain_menu" name="其他扣款输入" parent="sy_account_menu" action="action_otherdetain"
+                  sequence="30"/>
+                  
+        <menuitem id="sy_report_menu" name="报表" parent="base.menu_reporting" sequence="50"/>
+
+
+        <menuitem action="action_brand_plan_report" id="menu_brand_plan_report" parent="sy_report_menu" sequence="30"
+                  name="品牌日报表"/>
+
+        <menuitem action="action_sy_pos_order_report" id="menu_sy_pos_order_report" parent="sy_report_menu"
+                  sequence="10" name="POS销售报表"/>
+                  
+        <!--
+		<menuitem id="lzpd_menu" name="乐之盘点" sequence="10"/>
+		<menuitem id="pd_menu" name="盘点" parent="lzpd_menu" sequence="10"/>
+		<menuitem id="begin_check_menu" name="开始复盘" parent="pd_menu" action="action_begin_check"
+                  sequence="10"/>
+		<menuitem id="front_check_bak_head_menu" name="复盘" parent="pd_menu" action="action_front_check_bak_head"
+                  sequence="20"/>
+        -->
+                  
+		<menuitem id="plan_menu" name="销售计划" sequence="20"/> 
+		<menuitem id="plan_model_menu" name="销售计划模板" parent="plan_menu" sequence="1"/> 
+		<menuitem id="plan_model_company_menu" name="公司计划模板" parent="plan_model_menu" action="action_sale_plan_model_company" sequence="1" />
+		<menuitem id="plan_model_bigclass_menu" name="大类计划模板" parent="plan_model_menu" action="action_sale_plan_model_bigclass" sequence="10" />
+		
+				
+		<menuitem id="sale_plan_manager_menu" name="销售计划" parent="plan_menu" sequence="10"/>
+        <menuitem id="sale_plan" name="公司月计划" parent="sale_plan_manager_menu" action="action_sale_plan" sequence="10"/>
+        <menuitem id="category_sale_plan_menu" name="大类月目标" parent="sale_plan_manager_menu"
+                  action="action_category_sale_plan" sequence="20"/>
+        <menuitem id="brand_sale_plan_menu" name="品牌月目标" parent="sale_plan_manager_menu" action="action_brand_sale_plan"
+                  sequence="30"/>
+    </data>
+</openerp>

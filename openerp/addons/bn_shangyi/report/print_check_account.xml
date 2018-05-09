@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="print_check_account" name="对账单">
+    <t t-call="report.external_layout">
+    	<t t-foreach="heard" t-as="h">
+    	
+    	<div class="page">
+			<div class="row">
+			<div class="text-center">
+			<t t-esc="heard.company_id.code"/> <t t-esc="heard.company_id.name"/>
+				<h2><strong>对账单</strong></h2>
+			</div>
+			<div>
+			<table class="table table-condensed">
+			<tr>
+				<td class="text-right">厂商代码</td>
+				<td class="text-right"><t t-esc="heard.supplier.code"/></td>
+				<td class="text-right">厂商名称</td>
+				<td class="text-right" colspan="3"><t t-esc="heard.supplier.name"/></td>
+				<td class="text-right">经营方式</td>
+				<td class="text-right">
+					<t t-if="heard.type=='a'">联营</t>
+					<t t-if="heard.type=='1'">买断</t>	
+					<t t-if="heard.type=='2'">寄售</t>
+				</td>
+			</tr>
+			<tr>
+					<td class="text-right">付款方式</td>
+					<td class="text-right">
+						<t t-if="heard.pay_type=='0'">现金</t>
+						<t t-if="heard.pay_type=='1'">支票</t>
+						<t t-if="heard.pay_type=='2'">转账</t>
+						<t t-if="heard.pay_type=='3'">汇票</t>
+						<t t-if="heard.pay_type=='4'">电汇</t>
+						<t t-if="heard.pay_type=='5'">银行承兑天</t>
+						<t t-if="heard.pay_type=='6'">银行承兑30天</t>
+						<t t-if="heard.pay_type=='7'">银行承兑45天</t>
+						<t t-if="heard.pay_type=='8'">银行承兑60天</t>
+						<t t-if="heard.pay_type=='9'">银行承兑90天</t>
+						<t t-if="heard.pay_type=='A'">银行承兑120天</t>
+						<t t-if="heard.pay_type=='B'">银行承兑150天</t>
+					</td>
+					<td class="text-right">结算方式</td>
+					<td class="text-right">
+						<t t-if="heard.amount_type=='0'">现结</t>
+						<t t-if="heard.amount_type=='1'">日结</t>
+						<t t-if="heard.amount_type=='2'">月结</t>
+						<t t-if="heard.amount_type=='3'">经销代结</t>
+					</td>
+					<td class="text-right">结算天数</td>
+					<td class="text-right"><t t-esc="heard.days"/></td>
+					<td class="text-right">铺底金额</td>
+					<td class="text-right">  </td>
+			</tr>
+			<tr>
+				<td class="text-right">进货金额</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(heard.income_amount)"/></td>
+				<td class="text-right">
+					<t t-if="heard.type=='0'">抽成金额</t>
+					<t t-if="heard.type=='1'">退货金额</t>
+					<t t-if="heard.type=='a'">退货金额</t>
+				</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(heard.return_amount)"/></td>
+				<td class="text-right">调价金额</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(heard.adjust_amount)"/></td>
+				<td class="text-right">扣款金额</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(heard.sub_amount)"/></td>
+			</tr>
+			<tr>
+				<td class="text-right">开始日期</td>
+				<td class="text-right"><t t-esc="heard.start_date"/></td>
+				<td class="text-right">结束日期</td>
+				<td class="text-right"><t t-esc="heard.end_date"/></td>
+				<td class="text-right">货款金额</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(heard.sale_cost)"/></td>
+				<td class="text-right">销售金额</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(heard.sale_amount)"/></td>
+			</tr>
+			<tr>
+				<td class="text-right">租金</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(heard.rent_amount)"/></td>
+				<td class="text-right">预付款</td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right">本次应付</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(heard.pay_amount)"/></td>
+			</tr>
+			</table>
+			<div t-if="heard.deduct_fund">
+			<table class="table table-condensed">
+			<tr>
+				<td class="text-right">扣款明细清单</td>
+			</tr>
+			<tr>
+				<td class="text-right">扣款月份</td>
+				<td class="text-right">分店</td>
+				<td class="text-right">合约号</td>
+				<td class="text-right">扣款内容</td>
+				<td class="text-right">支付方式</td>
+				<td class="text-right">去税金额</td>
+				<td class="text-right">税额</td>
+				<td class="text-right">含税金额</td>
+			</tr>
+			<t t-foreach="deduct_fund" t-as="df">
+			<tr>
+				<td class="text-right"><t t-esc="df.lngyear"/></td>
+				<td class="text-right"><t t-esc="df.company_id.name"/></td>
+				<td class="text-right"><t t-esc="df.contactid"/></td>
+				<td class="text-right"><t t-esc="df.content"/></td>
+				<td class="text-right">
+					<t t-if="df.paymode=='1'">现金</t>
+					<t t-if="df.paymode=='2'">支票</t>
+					<t t-if="df.paymode=='3'">抵扣货款</t>
+				</td>
+				<td class="text-right"><t t-esc="'{:,}'.format(df.amount)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(df.tax)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(df.sum)"/></td>
+			</tr>
+			</t>
+			<tr>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"><t t-esc="'{:,}'.format(deduct_fund_amount)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(deduct_fund_tax)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(deduct_fund_sum)"/></td>
+			</tr>
+			</table>
+			</div>
+			<div t-if="heard.type=='a'">
+			<table class="table table-condensed">
+			<tr>
+				<td class="text-right">销售明细</td>
+			</tr>
+			<tr>
+				<td class="text-right">销售日期</td>
+				<td class="text-right">商品编码</td>
+				<td class="text-right">条码</td>
+				<td class="text-right">品牌</td>
+				<td class="text-right">商品名称</td>
+				<td class="text-right">规格</td>
+				<td class="text-right">销售数量</td>
+				<td class="text-right">销售金额</td>
+				<td class="text-right">抽成率</td>
+				<td class="text-right">货款金额</td>
+				<td class="text-right">标识</td>
+			</tr>
+			<t t-foreach="saledetail" t-as="sd">
+			<tr>
+				<td class="text-right"><t t-esc="sd.date"/></td>
+				<td class="text-right"><t t-esc="sd.product_id.code"/></td>
+				<td class="text-right"><t t-esc="sd.product_id.barcode"/></td>
+				<td class="text-right"><t t-esc="sd.product_id.brand_id.name"/></td>
+				<td class="text-right"><t t-esc="sd.product_id.name"/></td>
+				<td class="text-right"><t t-esc="sd.product_id.spec"/></td>
+				<td class="text-right"><t t-esc="sd.qty"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(sd.saleamt)"/></td>
+				<td class="text-right"><t t-esc="str(sd.returnrat*100)+'%'"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(float('%.2f'%sd.costamt))"/></td>
+				<td class="text-right">
+					<t t-if="sd.flag=='0'">POS</t>
+					<t t-if="sd.flag=='1'">网购</t>
+				</td>
+			</tr>
+			</t>
+			<tr>
+				<td class="text-right">合计：</td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"><t t-esc="'{:,}'.format(saledetail_saleamt_sum)"/></td>
+				<td class="text-right"> </td>
+				<td class="text-right"><t t-esc="'{:,}'.format(float('%.2f'%saledetail_costamt_sum))"/></td>
+				<td class="text-right"> </td>
+			</tr>
+			</table>
+			</div>
+			<div t-if="heard.type=='1'">
+			<table class="table table-condensed">
+			<tr>
+				<td class="text-right">验收单</td>
+			</tr>
+			<tr>
+				<td class="text-right">业务类型</td>
+				<td class="text-right">分店</td>
+				<td class="text-right">订单号</td>
+				<td class="text-right">验收单号</td>
+				<td class="text-right">DM</td>
+				<td class="text-right">验收日期</td>
+				<td class="text-right">无税金额</td>
+				<td class="text-right">税额</td>
+				<td class="text-right">价税合计</td>
+			</tr>
+			<t t-foreach="payable_head" t-as="ph">
+			<tr>
+				<td class="text-right">
+					<t t-if="ph.ordertype=='0'">进货</t>
+					<t t-if="ph.ordertype=='1'">退货</t>
+					<t t-if="ph.ordertype=='2'">调整</t>
+					<t t-if="ph.ordertype=='4'">进货更正</t>
+					<t t-if="ph.ordertype=='5'">退货更正</t>
+				</td>
+				<td class="text-right"><t t-esc="ph.company_id.name"/></td>
+				<td class="text-right"><t t-esc="ph.orderid"/></td>
+				<td class="text-right"><t t-esc="ph.receiptid"/></td>
+				<td class="text-right"><t t-esc="ph.dm"/></td>
+				<td class="text-right"><t t-esc="ph.receiptdate[0:10]"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(ph.orderamt)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(ph.ordertax)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(ph.amout)"/></td>
+			</tr>
+			</t>
+			<tr>
+				<td class="text-right">小计</td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"><t t-esc="'{:,}'.format(payable_head_amount_sum)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(payable_head_tax_sum)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(payable_head_sum)"/></td>
+			</tr>
+			</table>
+			</div>
+			<div t-if="heard.type=='2'">
+			<table class="table table-condensed">
+			<tr>
+				<td class="text-right">寄售销售明细</td>
+			</tr>
+			<tr>
+				<td class="text-right">标志号</td>
+				<td class="text-right">商品编码</td>
+				<td class="text-right">条码</td>
+				<td class="text-right">品牌</td>
+				<td class="text-right">商品名称</td>
+				<td class="text-right">规格型号</td>
+				<td class="text-right">销售数量</td>
+				<td class="text-right">对账数量</td>
+				<td class="text-right">对账单价</td>
+				<td class="text-right">货款小计</td>
+				<td class="text-right">未对数量</td>
+				<td class="text-right">来源</td>
+			</tr>
+			<t t-foreach="payable" t-as="p">
+			<tr>
+				<div t-if="p.check_amt!=0">
+				<td class="text-right"><t t-esc="p.receiptid"/></td>
+				<td class="text-right"><t t-esc="p.product_id.code"/></td>
+				<td class="text-right"><t t-esc="p.product_id.barcode"/></td>
+				<td class="text-right"><t t-esc="p.product_id.brand_id.name"/></td>
+				<td class="text-right"><t t-esc="p.product_id.name"/></td>
+				<td class="text-right"><t t-esc="p.product_id.spec"/></td>
+				<td class="text-right"><t t-esc="p.receipt_qty"/></td>
+				<td class="text-right"><t t-esc="p.check_qty"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(p.receipt_amt)"/></td>
+				<td class="text-right"><t t-esc="'{:,}'.format(p.check_amt)"/></td>
+				<td class="text-right"><t t-esc="p.return_qty"/></td>
+				<td class="text-right">
+					<t t-if="p.sourceflag=='0'">POS</t>
+					<t t-if="p.sourceflag=='1'">领用</t>
+					<t t-if="p.sourceflag=='2'">网购</t>
+					<t t-if="p.sourceflag=='3'">上月遗留</t>
+					<t t-if="p.sourceflag=='4'">微信</t>
+					<t t-if="p.sourceflag=='5'">团购</t>
+					<t t-if="p.sourceflag=='6'">天猫</t>
+					<t t-if="p.sourceflag=='7'">电子渠道</t>
+					<t t-if="p.sourceflag=='B'">企客</t>															
+					<t t-if="p.sourceflag=='C'">门店团购</t>	
+					<t t-if="p.sourceflag=='T'">淘宝</t>	
+					<t t-if="p.sourceflag=='S'">员购</t>						
+					<t t-if="p.sourceflag=='J'">京东</t>															
+					<t t-if="p.sourceflag=='9'"> </t>
+				</td>
+				</div>
+			</tr>
+			</t>
+			<tr>
+				<td class="text-right">合计：</td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+				<td class="text-right"><t t-esc="'{:,}'.format(payable_sum)"/></td>
+				<td class="text-right"> </td>
+				<td class="text-right"> </td>
+			</tr>
+			</table>
+			</div>
+			</div>
+			</div>
+		</div>
+		</t>
+    </t>
+    
+</template>
+</data>
+</openerp>

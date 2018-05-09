@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_import_sale_plan_form">
+            <field name="name">import.sale.plan.form</field>
+            <field name="model">import.sale.plan</field>
+            <field name="arch" type="xml">
+                <form string="import_sale_plan" version="7.0">
+                    <header>
+                        <button name="import_sale_plan" string="导入销售计划" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="period_id"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="关闭" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_import_sale_plan">
+            <field name="name">import_sale_plan</field>
+            <field name="res_model">import.sale.plan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_import_sale_plan_form"/>
+        </record>
+
+        <!-- 定义菜单  -->
+
+        <record model="ir.ui.view" id="view_import_file_sale_plan_form">
+            <field name="name">import.file.sale.plan.form</field>
+            <field name="model">import.file.sale.plan</field>
+            <field name="arch" type="xml">
+                <form string="import_file_sale_plan" version="7.0">
+                    <header>
+                        <button name="import_plan" string="导入销售计划" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="period_id"/>
+                            <field name="file" filename="datas_fname"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="关闭" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_import_file_sale_plan">
+            <field name="name">import_file_sale_plan</field>
+            <field name="res_model">import.file.sale.plan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_import_file_sale_plan_form"/>
+        </record>
+
+        <!-- 定义菜单  -->
+    </data>
+</openerp>

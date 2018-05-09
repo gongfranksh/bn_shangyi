@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_product_brand_form">
+            <field name="name">product.brand.form</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <form string="product_brand" version="7.0">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_product_brand_tree">
+            <field name="name">product.brand.tree</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <tree string="product_brand">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search product_brand  icon    -->
+        <record model="ir.ui.view" id="view_product_brand_search">
+            <field name="name">product.brand.search</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <search string="product_brand">
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_product_brand">
+            <field name="name">product_brand</field>
+            <field name="res_model">product.brand</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_product_brand_tree"/>
+        </record>
+
+        <!-- 定义菜单  -->
+    </data>
+</openerp>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<openerp>
+	<data>
+	<!--
+		<report id="report_stock_check"
+			string="盘点单打印"
+			model="front.check.bak.head"
+			name="print_stock_check"
+			rml="bn_shangyi/report/print_stock_check.rml"
+			menu = 'True'
+			auto="True"
+			header="False"/>
+
+			
+	<report id="stock_check_print"
+			string="打印复盘明细单"
+			model="front.check.bak.head"
+			report_type="qweb-pdf"
+			name="bn_shangyi.bn_shangyi_print_stock_check"
+			file="bn_shangyi.print_stock_check"
+			menu = 'True'
+			auto="True"
+			header="False"/>
+		-->	
+	<report id="check_account_print"
+			string="打印对账单"
+			model="check.account"
+			report_type="qweb-pdf"
+			name="bn_shangyi.bn_shangyi_print_check_account"
+			file="bn_shangyi.print_check_account"
+			menu = 'True'
+			auto="True"
+			header="False"/>
+	</data>
+</openerp>

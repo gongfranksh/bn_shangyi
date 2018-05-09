@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_front_check_bak_head_form">
+            <field name="name">front.check.bak.head.form</field>
+            <field name="model">front.check.bak.head</field>
+            <field name="arch" type="xml">
+                <form string="front_check_bak_head" version="7.0">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="add_detail" string="增加盘点明细" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="code" readonly="True"/>
+                            <field name="shield" readonly="True"/>
+                        </group>
+                        <group col="4">
+                            <field name="start_date" readonly="True"/>
+                            <field name="end_date" readonly="True"/>
+                            <field name="r_id" required="True"/>
+                            <field name="r_operaorid" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="company_id" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="details_id">
+                                <tree editable="bottom" string="盘点明细"
+                                      colors="blue:checkqty2==0;red:checkqty1!=checkqty2;">
+                                    <field name="product_id" readonly="True"/>
+                                    <field name="proid" readonly="True"/>
+                                    <field name="barcode" readonly="True"/>
+                                    <field name="checkqty1" readonly="True"/>
+                                    <field name="checkqty2"/>
+                                    <field name="operaorid" readonly="True"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_front_check_bak_head_tree">
+            <field name="name">front.check.bak.head.tree</field>
+            <field name="model">front.check.bak.head</field>
+            <field name="arch" type="xml">
+                <tree string="front_check_bak_head">
+                    <field name="code"/>
+                    <field name="shield"/>
+                    <field name="state"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="r_id"/>
+                    <field name="r_operaorid"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search front_check_bak_head  icon    -->
+        <record model="ir.ui.view" id="view_front_check_bak_head_search">
+            <field name="name">front.check.bak.head.search</field>
+            <field name="model">front.check.bak.head</field>
+            <field name="arch" type="xml">
+                <search string="front_check_bak_head">
+                    <filter string="本次盘点" name="now_check"
+                            domain="[('start_date','&lt;=', time.strftime('%%Y-%%m-%%d')),('end_date','&gt;=',time.strftime('%%Y-%%m-%%d'))]"/>
+                    <filter string="复盘" name="double_check" domain="[('state','=','2')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_front_check_bak_head">
+            <field name="name">front_check_bak_head</field>
+            <field name="res_model">front.check.bak.head</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="context" eval="{'search_default_now_check':1,}"/>
+            <field name="view_id" ref="view_front_check_bak_head_tree"/>
+        </record>
+
+        <!-- 定义菜单  -->
+
+        <record model="ir.ui.view" id="view_begin_check_form">
+            <field name="name">bein.check.form</field>
+            <field name="model">begin.check</field>
+            <field name="arch" type="xml">
+                <form string="begin_check" version="7.0">
+                    <header>
+                        <button name="begin_check" string="开始复盘" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="company_id" on_change="onchange_company(company_id)"/>
+                            <field name="code"/>
+                            <field name="account_id" readonly="True"/>
+                            <field name="date" on_change="onchange_date(date)"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_begin_check_tree">
+            <field name="name">begin.check.tree</field>
+            <field name="model">begin.check</field>
+            <field name="arch" type="xml">
+                <tree string="begin_check">
+                    <field name="company_id"/>
+                    <field name="code"/>
+                    <field name="account_id"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search front_check_bak_head  icon    -->
+        <record model="ir.ui.view" id="view_begin_check_search">
+            <field name="name">begin.check.search</field>
+            <field name="model">begin.check</field>
+            <field name="arch" type="xml">
+                <search string="begin_check">
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_begin_check">
+            <field name="name">begin_check</field>
+            <field name="res_model">begin.check</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_begin_check_tree"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_front_check_bak_add_form">
+            <field name="name">front.check.bak.add.form</field>
+            <field name="model">front.check.bak.add</field>
+            <field name="arch" type="xml">
+                <form string="front_check_bak_add" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="shield" readonly="True"/>
+                            <field name="detail_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="checkqty2"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="add_detail" string="增加盘点明细" type="object"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="return_shangyi_action"
+                    name="return_shangyi_action"
+                    src_model="front.check.bak.head"
+                    res_model="front.check.bak.wizard"
+                    view_type="form" view_mode="form"
+                    key2="client_action_multi" target="new"/>
+
+        <record model="ir.ui.view" id="view_front_check_bak_wizard_form">
+            <field name="name">front.check.bak.wizard.form</field>
+            <field name="model">front.check.bak.wizard</field>
+            <field name="arch" type="xml">
+                <form string="front_check_bak_wizard" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="details" readonly="True">
+                                <tree>
+                                    <field name="head_id"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="return_shangyi" string="抛转商益" type="object"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

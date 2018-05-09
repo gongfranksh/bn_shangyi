@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_compute_rate_form">
+            <field name="name">compute.rate.form</field>
+            <field name="model">compute.rate</field>
+            <field name="arch" type="xml">
+                <form string="compute_rate" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="model_id" readonly="True"/>
+                            <field name="is_all"/>
+                        </group>
+                        <group attrs="{'invisible': [('is_all','!=',True)]}">
+                            <field name="company_id" readonly="True"/>
+                            <field name="company_code" readonly="True"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="object" name="compute_brand" string="确定" class="oe_highlight"/>
+                        or
+                        <button special="cancel" class="oe_link" string="取消"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

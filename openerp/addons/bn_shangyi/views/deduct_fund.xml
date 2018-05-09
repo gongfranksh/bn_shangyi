@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_deduct_fund_form">
+            <field name="name">deduct.fund.form</field>
+            <field name="model">deduct.fund</field>
+            <field name="arch" type="xml">
+                <form string="deduct_fund" version="7.0">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="checkid"/>
+                            <field name="status"/>
+                            <field name="employee_id"/>
+                            <field name="fundtype"/>
+                            <field name="sum"/>
+                            <field name="tax"/>
+                            <field name="company_id"/>
+                            <field name="billflag"/>
+                            <field name="paymode"/>
+                            <field name="amount"/>
+                            <field name="supplier"/>
+                            <field name="content"/>
+                            <field name="lngyear"/>
+                            <field name="contactid"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_deduct_fund_tree">
+            <field name="name">deduct.fund.tree</field>
+            <field name="model">deduct.fund</field>
+            <field name="arch" type="xml">
+                <tree string="deduct_fund">
+                    <field name="checkid"/>
+                    <field name="status"/>
+                    <field name="employee_id"/>
+                    <field name="fundtype"/>
+                    <field name="sum"/>
+                    <field name="tax"/>
+                    <field name="company_id"/>
+                    <field name="billflag"/>
+                    <field name="paymode"/>
+                    <field name="amount"/>
+                    <field name="supplier"/>
+                    <field name="content"/>
+                    <field name="lngyear"/>
+                    <field name="contactid"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search deduct_fund  icon    -->
+        <record model="ir.ui.view" id="view_deduct_fund_search">
+            <field name="name">deduct.fund.search</field>
+            <field name="model">deduct.fund</field>
+            <field name="arch" type="xml">
+                <search string="deduct_fund">
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_deduct_fund">
+            <field name="name">deduct_fund</field>
+            <field name="res_model">deduct.fund</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_deduct_fund_tree"/>
+        </record>
+
+        <!-- 定义菜单  -->
+    </data>
+</openerp>

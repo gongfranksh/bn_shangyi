@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_import_check_list_form">
+            <field name="name">import.check.list.form</field>
+            <field name="model">import.check.list</field>
+            <field name="arch" type="xml">
+                <form string="import_check_list" version="7.0">
+                    <header>
+                        <button name="import_check_list_product" string="导入差异数据" type="object"/>
+                        <button name="import_receipt_data" string="导入验收单单数据" type="object"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="period"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="company" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="关闭" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_import_check_list">
+            <field name="name">import_check_list</field>
+            <field name="res_model">import.check.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_import_check_list_form"/>
+        </record>
+
+        <!-- 定义菜单  -->
+    </data>
+</openerp>

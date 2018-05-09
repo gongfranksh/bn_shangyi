@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_check_account_form">
+            <field name="name">check.account.form</field>
+            <field name="model">check.account</field>
+            <field name="arch" type="xml">
+                <form string="check_account" version="7.0">
+                    <header>
+                        <!-- <button name="import_excel" string="导出销售明细" type="object"/> -->
+                        <button name="update" string="更新对账单" type="object"/>
+                    </header>
+		            <sheet>
+					<group string="基本信息" col="4">
+						<field name="checkid"/>
+			        	<separator> </separator><separator> </separator>
+			        	<field name="supplier"/>
+			        	<field name="code"/>
+			        	<field name="type"/>
+			        	<field name="sup_type"/>
+			        	<field name="pay_type"/>
+			        	<field name="amount_type"/>
+					</group>
+					<group string="计费周期" col="6">
+						<field name="date"/>
+						<field name="start_date"/>
+						<field name="end_date"/>
+						<field name="company_id"/>
+						<field name="employee_id"/>
+					</group>
+					<group string="账务信息" col="2">
+						<field name="income_amount" attrs="{'invisible': [('sup_type', '!=','0')]}"  />
+						<field name="return_amount"  attrs="{'invisible': [('sup_type', '!=','0')]}"  />
+						<field name="rent_amount" attrs="{'invisible': [('sup_type', '!=','1')]}"/>
+						<field name="adjust_amount"/>
+						<field name="sale_amount"/>
+						<field name="sale_cost"/>
+						<field name="sub_amount"/>
+						<field name="pay_amount" />
+					</group>
+					<group>
+						<field name="note"/>
+					</group>
+					<notebook>
+					<page string="销售明细" attrs="{'invisible': [('type', '!=', 'a')]}">
+					<group>
+						<field name="saledetail" nolabel="1" widget="one2many_list" context="{'type': type}">
+						<tree editable="button">
+							<field name="product_code"/>
+							<field name="product_barcode"/>
+							<field name="product_id"/>
+							<field name="product_spec"/>
+							<field name="product_brand"/>
+							<field name="date"/>
+							<field name="qty"/>
+							<field name="saleamt" sum="saleamt"/>
+							<field name="returnrat"/>
+							<field name="costamt" sum="costamt"/>
+							<field name="flag"/>
+						</tree>
+						</field>
+					</group>
+					</page>
+					<page string="寄售明细" attrs="{'invisible': [('type', '!=', '2')]}">
+					<group>
+						<field name="payable" nolabel="1" widget="one2many_list" context="{'type': type}">
+						<tree editable="button">
+							<field name="product_code"/>
+							<field name="product_barcode"/>
+							<field name="product_id"/>
+							<field name="product_brand"/>
+							<field name="product_spec"/>
+							<field name="receipt_qty"/>
+							<field name="check_qty"/>
+							<field name="receipt_amt"/>
+							<field name="check_amt" sum="check_amt"/>
+							<field name="receiptid"/>
+							<field name="return_qty"/>
+							<field name="sourceflag"/>
+						</tree>
+						</field>
+					</group>
+					</page>
+					<page string="验收单" attrs="{'invisible': [('type', '!=', '1')]}">
+					<group>
+						<field name="payable_head" nolabel="1" widget="one2many_list" context="{'type': type}">
+						<tree editable="button">
+							<field name="ordertype"/>
+							<field name="company_id"/>
+							<field name="orderid"/>
+							<field name="receiptid"/>
+							<field name="dm"/>
+							<field name="receiptdate"/>
+							<field name="orderamt" sum="orderamt"/>
+							<field name="ordertax" sum="ordertax"/>
+							<field name="amout" sum="amout"/>
+							<field name="needinvoice"/>
+							<field name="accountdate"/>
+						</tree>
+						</field>
+					</group>
+					</page>
+					<page string="预付款">
+					<group>
+						<field name="prepay_head" nolabel="1" widget="one2many_list">
+						<tree editable="button">
+							<field name="prepayid"/>
+							<field name="orderid"/>
+							<field name="orderamt"/>
+							<field name="prepayamt"/>
+							<field name="status"/>
+							<field name="checkid"/>
+							<field name="remark"/>
+						</tree>
+						</field>
+					</group>
+					</page>
+					<page string="扣款项目" attrs="{'invisible': [('sub_amount', '=', 0),('rent_amount', '=', 0)]}">
+					<group>
+						<field name="deduct_fund" nolabel="1" widget="one2many_list" context="{'type': type}">
+						<tree editable="button">
+							<field name="fundtype"/>
+							<field name="contactid"/>
+							<field name="content"/>
+							<field name="lngyear"/>
+							<field name="company_id"/>
+							<field name="amount" sum="amount"/>
+							<field name="tax" sum="tax"/>
+							<field name="sum" sum="sum"/>
+						</tree>
+						</field>
+					</group>
+					</page>
+					</notebook>
+		        </sheet>
+		        <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+					<field name="message_ids" widget="mail_thread"/>
+				</div>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_check_account_tree">
+            <field name="name">check.account.tree</field>
+            <field name="model">check.account</field>
+            <field name="arch" type="xml">
+                <tree string="check_account">
+                    <field name="checkid"/>
+                    <field name="date"/>
+                    <field name="supplier"/>
+                    <field name="type"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="pay_amount"/>
+                    <field name="sub_amount"/>
+                    <field name="sale_amount"/>
+                    <field name="group_code"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search sy_product  icon    -->
+        <record model="ir.ui.view" id="view_check_account_search">
+            <field name="name">check.account.search</field>
+            <field name="model">check.account</field>
+            <field name="arch" type="xml">
+                <search string="check_account">
+                    <field name="checkid"/>
+                    <field name="date"/>
+                    <field name="company_id"/>
+                    <field name="supplier"/>
+                    <group string="分组">
+                    	<filter name="groupby_date" context="{'group_by' : 'date'}" string="日期分组"/>
+                    	<filter name="groupby_type" context="{'group_by' : 'type'}" string="经营方式"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_check_account">
+            <field name="name">check_account</field>
+            <field name="res_model">check.account</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_check_account_tree"/>
+            <field name="context" eval="{'search_default_groupby_date':1,
+            							'search_default_groupby_type':1}"/>
+        </record>
+
+        <!-- 定义菜单  -->
+
+
+        <record model="ir.ui.view" id="view_check_account_import_form">
+            <field name="name">check.account.import.form</field>
+            <field name="model">check.account.import</field>
+            <field name="arch" type="xml">
+                <form string="check_account_import" version="7.0">
+                    <header>
+                        <button name="import_account" string="导入对账单" type="object"/>
+                        <!-- <button name="import_sponse" string="导入行销费用" type="object"/> -->
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="company_id"/>
+                            <field name="account"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="关闭" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_check_account_import">
+            <field name="name">check_account_import</field>
+            <field name="res_model">check.account.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_check_account_import_form"/>
+        </record>
+
+		<record model="ir.ui.view" id="view_purchase_group_form">
+            <field name="name">purchase.group.form</field>
+            <field name="model">purchase.group</field>
+            <field name="arch" type="xml">
+                <form string="purchase_group" version="7.0">
+                    <header>
+                        <button name="update_date" string="更新采购组" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="purgroupid"/>
+                            <field name="purname"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_purchase_group_tree">
+            <field name="name">purchase.group.tree</field>
+            <field name="model">purchase.group</field>
+            <field name="arch" type="xml">
+                <tree string="purchase_group">
+                    <field name="purgroupid"/>
+                    <field name="purname"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_purchase_group">
+            <field name="name">purchase_group</field>
+            <field name="res_model">purchase.group</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_purchase_group_tree"/>
+        </record>
+    </data>
+</openerp>

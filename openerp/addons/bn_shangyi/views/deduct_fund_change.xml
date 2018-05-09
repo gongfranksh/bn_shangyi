@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_deduct_fund_change_form">
+            <field name="name">deduct.fund.change.form</field>
+            <field name="model">deduct.fund.change</field>
+            <field name="arch" type="xml">
+                <form string="deduct_fund_change" version="7.0">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="load_detail" string="读取明细" type="object"
+                                attrs="{'invisible': [('state','=','2')]}"/>
+                        <button name="return_shangyi" string="财务审核" type="object" groups="bn_shangyi.group_caiwu"
+                                attrs="{'invisible': [('state','=','2')]}"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="code"/>
+                            <field name="lngyear" on_change="onchange_checkid(company_id,supplier,lngyear)"
+                                   attrs="{'readonly': [('state','=','2')]}" invisible="1"/>
+                            <field name="supplier" on_change="onchange_checkid(company_id,supplier,lngyear)"
+                                   attrs="{'readonly': [('state','=','2')]}"/>
+                            <field name="peiod_id" on_change="onchange_period(peiod_id)"
+                                   attrs="{'readonly': [('state','=','2')]}"/>
+                            <field name="checkid" attrs="{'readonly': [('state','=','2')]}"/>
+                            <field name="contactid" readonly="True"/>							
+                            <field name="company_id" on_change="onchange_checkid(company_id,supplier,lngyear)"/>
+                        </group>
+                        <group>
+                        	
+                        </group>
+                        <group>
+                            <button name="add_detail" string="增加扣款" type="object"
+                                    attrs="{'invisible': [('state','=','2')]}"/>
+                        </group>
+                        <group>
+                        	<div>
+                            <field name="detail_ids" attrs="{'readonly': [('state','=','2')]}">
+                                <tree editable="button" colors="blue:operate=='1';red:operate=='2';green:operate=='3';">
+                                    <field name="operate"/>
+                                    <field name="itemid" readonly="True"/>
+                                    <field name="content" readonly="True"/>
+                                    <field name="amount" readonly="True"/>
+                                    <field name="tax" readonly="True"/>
+                                    <field name="sum" readonly="True"/>
+                                    <field name="c_amount" attrs="{'readonly': [('operate','!=','3')]}"/>
+                                    <field name="c_tax" attrs="{'readonly': [('operate','!=','3')]}"/>
+                                    <field name="c_sum" attrs="{'readonly': [('operate','!=','3')]}"/>
+                                </tree>
+                            </field>
+                            </div>
+                        </group>
+                        <group>
+                        	<field name="price"/>
+                        </group>
+                        <group>
+                            <field name="note" attrs="{'readonly': [('state','=','2')]}"/>
+                        </group>
+                        <group col="4">
+                            <field name="create_uid"/>
+                            <field name="create_date"/>
+                            <field name="operate_id"/>
+                            <field name="operate_date"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_deduct_fund_change_tree">
+            <field name="name">deduct.fund.change.tree</field>
+            <field name="model">deduct.fund.change</field>
+            <field name="arch" type="xml">
+                <tree string="deduct_fund_change">
+                    <field name="code"/>
+                    <field name="checkid"/>
+                    <field name="peiod_id"/>
+                    <field name="supplier"/>
+                    <field name="create_uid"/>
+                    <field name="company_id"/>
+                    <field name="state"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search deduct_fund_change  icon    -->
+        <record model="ir.ui.view" id="view_deduct_fund_change_search">
+            <field name="name">deduct.fund.change.search</field>
+            <field name="model">deduct.fund.change</field>
+            <field name="arch" type="xml">
+                <search string="deduct_fund_change">
+                	<field name="code"/>
+                    <field name="checkid"/>
+                    <field name="supplier"/>
+                    <field name="create_uid"/>
+                    <group string="状态">
+                        <filter string="未审核" name="draft" domain="[('state','!=','2')]"/>
+                        <filter string="已审核" name="aduit" domain="[('state','=','2')]"/>
+                    </group>
+                    <group string="分组">
+                    	<filter name="groupby_period" context="{'group_by':'peiod_id'}" string="账期分组"/>
+                    	<filter name="groupby_company" context="{'group_by':'company_id'}" string="门店分组"/>
+                    	<filter name="groupby_supplier" context="{'group_by':'supplier'}" string="供应商分组"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_deduct_fund_change">
+            <field name="name">deduct_fund_change</field>
+            <field name="res_model">deduct.fund.change</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_deduct_fund_change_tree"/>
+            <field name="context" eval="{}"/>
+        </record>
+
+        <!-- 定义菜单  -->
+
+        <record model="ir.ui.view" id="view_defuct_fund_detail_add_form">
+            <field name="name">defuct.fund.detail.add.form</field>
+            <field name="model">defuct.fund.detail.add</field>
+            <field name="arch" type="xml">
+                <form string="defuct_fund_detail_add" version="7.0">
+                    <sheet>
+                        <group col="4">
+                            <field name="operate" readonly="True"/>
+                            <field name="contactid" readonly="True"/>
+                            <field name="itemid"/>
+                            <field name="paymode"/>
+                            <field name="sum" on_change="onchange_sum(sum)"/>
+                            <field name="amount" invisible="1"/>
+                            <field name="tax" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="add_detail" string="增加" type="object"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sup_sponse_items_form">
+            <field name="name">sup.sponse.items.form</field>
+            <field name="model">sup.sponse.items</field>
+            <field name="arch" type="xml">
+                <form string="deduct.fund.change" version="7.0">
+                    <header>
+                        <button name="update_date" string="更新行销费用" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="sponseitemid"/>
+                            <field name="name"/>
+                            <field name="fundtype"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sup_sponse_items_tree">
+            <field name="name">sup.sponse.items.tree</field>
+            <field name="model">sup.sponse.items</field>
+            <field name="arch" type="xml">
+                <tree string="sup_sponse_items">
+                    <field name="sponseitemid"/>
+                    <field name="name"/>
+                    <field name="fundtype"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_sup_sponse_items">
+            <field name="name">sup_sponse_items</field>
+            <field name="res_model">sup.sponse.items</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_sup_sponse_items_tree"/>
+        </record>
+
+    </data>
+</openerp>

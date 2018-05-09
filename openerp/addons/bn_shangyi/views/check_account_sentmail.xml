@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <act_window id="action_check_account_sentemail"
+                    multi="True"
+                    key2="client_action_multi" name="群发邮件"
+                    res_model="check.account.sentmail" src_model="check.account"
+                    view_mode="form" target="new" view_type="form"/>
+
+
+        <record model="ir.ui.view" id="view_check_account_sentmail_form">
+            <field name="name">check.account.sentmail.form</field>
+            <field name="model">check.account.sentmail</field>
+            <field name="arch" type="xml">
+                <form string="check_account_sentmail" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="template_id"/>
+                            <field name="details_ids">
+                                <tree editable="button">
+                                    <field name="check_id"/>
+                                    <field name="sup_id"/>
+                                    <field name="sup_code"/>
+                                    <field name="email"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="send_mail" string="群发邮件" type="object"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

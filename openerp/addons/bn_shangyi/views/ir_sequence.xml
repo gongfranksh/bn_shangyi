@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="deduct_fund_change_type" model="ir.sequence.type">
+            <field name="name">扣款修改单</field>
+            <field name="code">deduct.fund.change</field>
+        </record>
+
+        <record id="seq_deduct_fund_change" model="ir.sequence">
+            <field name="name">扣款修改单</field>
+            <field name="code">deduct.fund.change</field>
+        </record>
+    </data>
+</openerp>

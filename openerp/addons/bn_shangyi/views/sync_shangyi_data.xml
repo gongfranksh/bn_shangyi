@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--  Run Schedulers -->
+
+        <record id="view_sync_shangyi_wizard" model="ir.ui.view">
+            <field name="name">乐之数据同步</field>
+            <field name="model">sync.shangyi.data</field>
+            <field name="arch" type="xml">
+                <form string="同步基础数据">
+                    <p>
+                        同步基础数据.
+                    </p>
+                    <footer>
+                        <button name="auto_update" string="同步全部基础数据" type="object"  class="oe_highlight"  />
+                        <button name="sync_product_class" string="同步大类数据" type="object"  class="oe_highlight"  />
+                        <button name="sync_product_brand" string="同步品牌数据" type="object"  class="oe_highlight"  />
+                        <button name="sync_supplier" string="同步供应商" type="object"  class="oe_highlight"  />
+                        <button name="sync_product" string="同步产品" type="object"  class="oe_highlight"  />
+                        <button name="sync_employee" string="同步用户" type="object"  class="oe_highlight"  />
+                        <button name="sync_pos" string="同步POS资料" type="object"  class="oe_highlight"  />
+                        <button name="set_product_category_parent" string="更新商品类别归属" type="object"  class="oe_highlight"  />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+         <act_window name="sync_product_data"
+            res_model="sync.shangyi.data"
+            src_model="sync.shangyi.data"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_sync_shangyi_data"/>
+
+    </data>
+</openerp>

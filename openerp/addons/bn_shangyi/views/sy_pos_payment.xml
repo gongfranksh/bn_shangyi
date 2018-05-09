@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_sy_pos_payment_form">
+            <field name="name">sy.pos.payment.form</field>
+            <field name="model">sy.pos.payment</field>
+            <field name="arch" type="xml">
+                <form string="sy_pos_payment" version="7.0">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="date"/>
+                            <field name="paymodel"/>
+                            <field name="paymoney"/>
+                            <field name="company_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_sy_pos_payment_tree">
+            <field name="name">sy.pos.payment.tree</field>
+            <field name="model">sy.pos.payment</field>
+            <field name="arch" type="xml">
+                <tree string="sy_pos_payment">
+                    <field name="code"/>
+                    <field name="paymodel"/>
+                    <field name="paymoney"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search sy_pos_payment  icon    -->
+        <record model="ir.ui.view" id="view_sy_pos_payment_search">
+            <field name="name">sy.pos.payment.search</field>
+            <field name="model">sy.pos.payment</field>
+            <field name="arch" type="xml">
+                <search string="sy_pos_payment">
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_sy_pos_payment">
+            <field name="name">sy_pos_payment</field>
+            <field name="res_model">sy.pos.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_sy_pos_payment_tree"/>
+        </record>
+
+        <!-- 定义菜单  -->
+    </data>
+</openerp>

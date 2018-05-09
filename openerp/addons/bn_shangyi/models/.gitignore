@@ -1,0 +1,17 @@
+/BNmssql.pyc
+/__init__.pyc
+/brand_plan_report.pyc
+/check_account.pyc
+/check_list_product.pyc
+/deduct_fund_change.pyc
+/mail.pyc
+/product_category.pyc
+/receipt.pyc
+/res_partner.pyc
+/res_users.pyc
+/sale_plan.pyc
+/sale_plan_model.pyc
+/sy_pos_order.pyc
+/sy_pos_order_report.pyc
+/sy_product.pyc
+/update_date.pyc

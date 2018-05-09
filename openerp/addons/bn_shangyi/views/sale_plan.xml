@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  New Form View   -->
+        <record model="ir.ui.view" id="view_sale_plan_form">
+            <field name="name">sale.plan.form</field>
+            <field name="model">sale.plan</field>
+            <field name="arch" type="xml">
+                <form string="sale_plan" version="7.0">
+                    <header>
+                    	<field name="state" widget="statusbar"/>
+                    	<button name="create_plan" string="选择模板" type="object"
+                    		attrs="{'invisible': [('state','=','1')]}"
+                    		groups="bn_shangyi.group_plan"/>
+                    	<button name="create_detail" string="创建日明细" type="object"
+                    		attrs="{'invisible': [('state','=','1')]}"
+                    		groups="bn_shangyi.group_plan_input"/>
+                    	<button name="copy_detail" string="复制日明细" type="object" 
+                    		attrs="{'invisible': [('state','=','1')]}"
+                    		groups="bn_shangyi.group_plan_input"/>
+                    	<button name="update" string="重算" type="object"
+                    		attrs="{'invisible': [('state','=','1')]}"
+                    		groups="bn_shangyi.group_plan"/>
+                    	<button name="return_shangyi" string="导入商益" type="object"
+                    		attrs="{'invisible': [('state','=','1')]}"
+                    		groups="bn_shangyi.group_plan"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="code" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="period_id" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="plan_sale" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="plan_profit" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="company_id" readonly="True"/>
+                        </group>
+                        <notebook>
+                            <page string='大类月计划'>
+                                <form>
+                                    <group>
+                                        <field name="category_detail" attrs="{'readonly': [('state','=','1')]}">
+                                            <tree editable="bottom">
+                                                <field name="category"/>
+                                                <field name="sale_weight" sum="sale_weight"/>
+                                                <field name="plan_sale" sum="plan_sale"/>
+                                                <field name="profit_weight" sum="profit_weight"/>
+                                                <field name="plan_profit" sum="plan_profit"/>
+                                                <button name="update" string="大类重算" type="object"
+                                                	groups="bn_shangyi.group_plan"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </form>
+                            </page>
+                            <page string='公司日计划'>
+                                <form>
+                                    <group>
+                                        <field name="daily_detail" attrs="{'readonly': [('state','=','1')]}">
+                                            <tree editable="bottom">
+                                                <field name="date"/>
+                                                <field name="sale_weight" sum="sale_weight"/>
+                                                <field name="plan_sale" sum="plan_sale"/>
+                                                <field name="profit_weight" sum="profit_weight"/>
+                                                <field name="plan_profit" sum="plan_profit"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </form>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_sale_plan_tree">
+            <field name="name">sale.plan.tree</field>
+            <field name="model">sale.plan</field>
+            <field name="arch" type="xml">
+                <tree string="sale_plan">
+                    <field name="code"/>
+                    <field name="period_id"/>
+                    <field name="plan_sale"/>
+                    <field name="plan_profit"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search sale_plan  icon    -->
+        <record model="ir.ui.view" id="view_sale_plan_search">
+            <field name="name">sale.plan.search</field>
+            <field name="model">sale.plan</field>
+            <field name="arch" type="xml">
+                <search string="sale_plan">
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_sale_plan">
+            <field name="name">sale_plan</field>
+            <field name="res_model">sale.plan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_sale_plan_tree"/>
+        </record>
+
+        <!-- 定义菜单  -->
+        <record model="ir.ui.view" id="view_category_sale_plan_form">
+            <field name="name">category.sale.plan.form</field>
+            <field name="model">category.sale.plan</field>
+            <field name="arch" type="xml">
+                <form string="category_sale_plan" version="7.0">
+                    <header>
+	                    <button name="update" string="大类重算" type="object"
+	                    		attrs="{'invisible': [('state','=','1')]}"
+	                    		groups="bn_shangyi.group_plan"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="sale_plan_id" readonly="True"/>
+                            <field name="state" readonly="True"/>
+                            <field name="period_id" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="company_id" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="category" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="plan_sale" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="plan_profit" attrs="{'readonly': [('state','=','1')]}"/>
+                        </group>
+                        <notebook>
+                            <page string="品牌月计划">
+                                <form>
+                                    <group>
+                                        <field name="brand_detail" attrs="{'readonly': [('state','=','1')]}">
+                                            <tree editable="bottom">
+                                                <field name="brand"/>
+                                                <field name="sale_weight" sum="sale_weight"/>
+                                                <field name="plan_sale" sum="plan_sale"/>
+                                                <field name="profit_weight" sum="profit_weight"/>
+                                                <field name="plan_profit" sum="plan_profit"/>
+                                                <button name="update" string="品牌重算" type="object"
+                                                	groups="bn_shangyi.group_plan"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </form>
+                            </page>
+                            <page string="大类日计划">
+                                <form>
+                                    <group>
+                                        <field name="daily_detail" attrs="{'readonly': [('state','=','1')]}">
+                                            <tree editable="bottom">
+                                                <field name="date"/>
+                                                <field name="sale_weight" sum="sale_weight"/>
+                                                <field name="plan_sale" sum="plan_sale"/>
+                                                <field name="profit_weight" sum="profit_weight"/>
+                                                <field name="plan_profit" sum="plan_profit"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </form>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_category_sale_plan_tree">
+            <field name="name">category.sale.plan.tree</field>
+            <field name="model">category.sale.plan</field>
+            <field name="arch" type="xml">
+                <tree string="category_sale_plan">
+                    <field name="sale_plan_id"/>
+                    <field name="period_id"/>
+                    <field name="company_id"/>
+                    <field name="category"/>
+                    <field name="plan_sale"/>
+                    <field name="plan_profit"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search category_sale_plan  icon    -->
+        <record model="ir.ui.view" id="view_category_sale_plan_search">
+            <field name="name">category.sale.plan.search</field>
+            <field name="model">category.sale.plan</field>
+            <field name="arch" type="xml">
+                <search string="category_sale_plan">
+                	<filter name="groupby_plan" context="{'group_by':'sale_plan_id'}" string="按计划分组"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_category_sale_plan">
+            <field name="name">category_sale_plan</field>
+            <field name="res_model">category.sale.plan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="context">{"search_default_groupby_plan": True,}</field>
+            <field name="view_id" ref="view_category_sale_plan_tree"/>
+        </record>
+
+        <!-- 定义菜单  -->
+
+        <record model="ir.ui.view" id="view_brand_sale_plan_form">
+            <field name="name">brand.sale.plan.form</field>
+            <field name="model">brand.sale.plan</field>
+            <field name="arch" type="xml">
+                <form string="brand_sale_plan" version="7.0">
+                    <header>
+	                    <button name="update" string="品牌重算" type="object"
+		                    		attrs="{'invisible': [('state','=','1')]}"
+		                    		groups="bn_shangyi.group_plan"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="category_sale_plan" readonly="True"/>
+                            <field name="state" readonly="True"/>
+                            <field name="period_id" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="company_id" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="brand" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="plan_sale" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="plan_profit" attrs="{'readonly': [('state','=','1')]}"/>
+                            <field name="daily_detail" attrs="{'readonly': [('state','=','1')]}">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="sale_weight" sum="sale_weight"/>
+                                    <field name="plan_sale" sum="plan_sale"/>
+                                    <field name="profit_weight" sum="profit_weight"/>
+                                    <field name="plan_profit" sum="plan_profit"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  new Tree View   -->
+        <record model="ir.ui.view" id="view_brand_sale_plan_tree">
+            <field name="name">brand.sale.plan.tree</field>
+            <field name="model">brand.sale.plan</field>
+            <field name="arch" type="xml">
+                <tree string="brand_sale_plan">
+                    <field name="category_sale_plan"/>
+                    <field name="sale_plan_id" invisible="True"/>
+                    <field name="period_id"/>
+                    <field name="company_id"/>
+                    <field name="brand"/>
+                    <field name="plan_sale"/>
+                    <field name="plan_profit"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  Search brand_sale_plan  icon    -->
+        <record model="ir.ui.view" id="view_brand_sale_plan_search">
+            <field name="name">brand.sale.plan.search</field>
+            <field name="model">brand.sale.plan</field>
+            <field name="arch" type="xml">
+                <search string="brand_sale_plan">
+                	<filter name="groupby_plan" context="{'group_by':'sale_plan_id'}" string="按计划分组"/>
+                	<filter name="groupby_categ_plan" context="{'group_by':'category_sale_plan'}" string="按大类计划分组"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- 定义视图动作  -->
+        <record model="ir.actions.act_window" id="action_brand_sale_plan">
+            <field name="name">brand_sale_plan</field>
+            <field name="res_model">brand.sale.plan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="context">{"search_default_groupby_plan": True,"search_default_groupby_categ_plan": True,}</field>
+            <field name="view_id" ref="view_brand_sale_plan_tree"/>
+        </record>
+	
+    </data>
+</openerp>
+

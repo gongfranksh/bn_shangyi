@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="print_stock_check" name="复盘明细单">
+    <t t-call="report.html_container">
+    	<t t-foreach="heard" t-as="h">
+    	<div class="page">
+			<div class="row">
+			<div class="text-center">
+			<t t-esc="heard.company_id.code"/> <t t-esc="heard.company_id.name"/>
+				<h2><strong>复盘明细单</strong></h2>
+				盘点单编号:<t t-esc="heard.code"/>
+				<br/>
+				货架号:<t t-esc="heard.shield"/>
+			</div>
+			<table class="table table-condensed">
+				<thead>
+				<tr>
+					<td>商品名称</td>
+					<td class="text-right">商品编码</td>
+					<td class="text-right">商品条码</td>
+					<td class="text-right">初盘数量</td>
+					<td class="text-right">复盘数量</td>
+				</tr>
+				</thead>
+				<tbody>
+				<t t-foreach="details_id" t-as="d">
+				<tr>
+					<td><t t-esc="d.product_id.name"/></td>
+					<td class="text-right"><t t-esc="d.product_id.code"/></td>
+					<td class="text-right"><t t-esc="d.product_id.barcode"/></td>
+					<td class="text-right"><t t-esc="d.checkqty1"/></td>
+					<td class="text-right">________</td>
+				</tr>
+				</t>
+				</tbody>
+			</table>
+			<div>
+				<strong>初盘人:_____________</strong>
+				<br/>
+				<strong>复盘人:_____________</strong>
+				<br/>
+				<strong>录入人:_____________</strong>
+			</div>
+			</div>
+		</div>
+		</t>
+    </t>
+</template>
+</data>
+</openerp>
