@@ -27,8 +27,10 @@ class sy_pos_payment(osv.osv):
     _columns={
               'code':fields.char(u'pos单号'),
               'date':fields.datetime(u'销售日期'),
-              'paymodel':fields.selection([('0',u'让零'),('1',u'现金'),('2',u'信用卡'),('4',u'购物券'),('5',u'其他'),
-                                           ('3',u'储值卡'),('7',u'支付宝'),('8',u'春天卡'),('w',u'微信')],u'支付类型'),
+              'paymodel':fields.selection([('0',u'让零'),  ('1',u'现金') ,('2',u'信用卡'),
+                                           ('3',u'储值卡'),('4',u'购物券'),('5',u'其他'),
+                                           ('6', u'让零'), ('7',u'支付宝'),('8',u'春天卡'),('w',u'微信')],
+                                            u'支付类型'),
               'paymoney':fields.float(u'支付金额'),
               'company_id':fields.many2one('res.company',u'门店'),
               }
